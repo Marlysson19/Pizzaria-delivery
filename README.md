@@ -1,2 +1,4 @@
 # Pizzaria delivery
-primeiro repositório
+primeiro repositório.
+
+Repositório criado durante uma aula.
