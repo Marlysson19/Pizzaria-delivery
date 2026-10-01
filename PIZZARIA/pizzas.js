@@ -22,7 +22,9 @@ description: 'Pizza deliciosa de mussarela.'
     img: 'images/pizza3.png',
     price: 25.00,
     description: 'Uma combinação deliciosa de queijos.'
-}
+},
+
+
 
 
 ];
