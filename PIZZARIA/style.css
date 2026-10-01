@@ -64,3 +64,18 @@ color: #d62828;
 }
 
 }
+.pizza img {
+width: 180px;
+height: 180px;
+object-fit: contain;
+display: block;
+margin: 0 auto 15px;
+}
+
+.pizza {
+transition: transform 0.2s;
+}
+
+.pizza:hover {
+transform: translateY(-5px);
+}
