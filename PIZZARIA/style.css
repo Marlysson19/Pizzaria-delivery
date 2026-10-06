@@ -224,3 +224,135 @@ background-color: #218838;
 
 
 }
+
+/*==========================================
+  TAMANHOS DA PIZZA
+  ==========================================*/
+
+  .pizzaInfo--sizes {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0 20px;
+  }
+
+  .pizzaInfo--sizes div {
+    border: 2px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .pizzaInfo--sizes div:hover {
+    border-color: #d62828;
+  }
+
+  .pizzaInfo--sizes .selected {
+    border-color: #d62828;
+    background-color: #d62828;
+    color: white;
+  }
+
+
+  /*=================================
+    QUANTIDADE
+    =================================*/
+
+  .pizzaInfo--quantityArea {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0 20px;
+  }
+
+  .pizzaInfo--quantityButton {
+    width: 35px;
+    height: 35px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: #ddd;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+  }
+
+  .pizzaInfo--quantityButton:hover {
+    background-color: #ccc;
+  }
+
+  .pizzaInfo--quantity {
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 25px;
+    text-align: center;
+  }
+
+
+  /*======================================
+    PREÇO
+    ======================================*/
+
+  .pizzaInfo--price {
+      font-size: 28px;
+      font-weight: bold;
+      color: #d62828;
+
+      margin: 20px 0;
+    }
+
+
+    /*======================================
+      BOTÃO ADICIONAR
+      ======================================*/
+
+  .pizzaInfo--addButton {
+    background-color: #28a745;
+
+    color: white;
+
+    border: none;
+
+    padding: 15px 25px;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+  }
+
+  .pizzaInfo--addButton:hover {
+    background-color: #218838;
+  }
+
+
+  /*==========================================
+    CELULAR
+    ==========================================*/
+
+    @media (max-width: 700px) {
+      .pizzaWindowBody {
+        flex-direction: column;
+        text-align: center;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .pizzaBig img {
+        width: 220px;
+      }
+
+      .pizzaInfo--sizes {
+        justify-content: center;
+      }
+
+      .pizzaInfo--quantityArea {
+        justify-content: center;
+      }
+
+      
+    }
