@@ -4,7 +4,7 @@ id: 1,
 name: 'Mussarela',
 img: 'images/pizza.png',
 price: 20.00,
-description: 'Pizza deliciosa de mussarela.'
+description: 'Molho de tomate, queijo mussarela e orégano.'
 },
 
 
