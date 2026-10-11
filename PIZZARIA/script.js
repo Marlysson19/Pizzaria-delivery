@@ -1,4 +1,4 @@
-javascript
+
 let pizzaArea = document.querySelector('.pizza-area');
 let pizzaWindowArea = document.querySelector('.pizzaWindowArea');
 let pizzaWindowClose = document.querySelector('.pizzaWindowClose');
