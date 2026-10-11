@@ -423,3 +423,55 @@ background-color: #218838;
     }
 }
     }
+
+/* RESUMO DO PEDIDO */
+
+.cart-summary {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #ddd;
+    text-align: right;
+}
+
+.cart-summary p {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.cart-summary h3 {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    color: #d62828;
+    font-size: 24px;
+}
+
+/* BOTÃO FINALIZAR */
+
+.cart-finish {
+    width: 100%;
+    margin-top: 15px;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #25D366;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cart-finish:hover {
+    background-color: #1da851;
+}
+
+.cart-clear {
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .cart-summary h3 {
+        font-size: 20px;
+    }
+}
