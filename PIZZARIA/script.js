@@ -1,179 +1,106 @@
+javascript
 let pizzaArea = document.querySelector('.pizza-area');
-
 let pizzaWindowArea = document.querySelector('.pizzaWindowArea');
-
 let pizzaWindowClose = document.querySelector('.pizzaWindowClose');
 
 let pizzaJsonIndex = 0;
-
 let selectedSize = 1;
-
 let quantity = 1;
+
+// Array que guarda as pizzas escolhidas
+let cart = [];
 
 
 // =====================================
-// CRIAR AS PIZZAS
+// CRIAR A VITRINE DE PIZZAS
 // =====================================
 
 pizzaJson.forEach((pizza, index) => {
-
     let pizzaElement = document.createElement('div');
 
     pizzaElement.classList.add('pizza');
 
     pizzaElement.innerHTML = `
         <img src="${pizza.img}" alt="${pizza.name}">
-
         <h3>${pizza.name}</h3>
-
         <p>${pizza.description}</p>
-
         <strong>
-            A partir de
-            R$ ${pizza.price[0].toFixed(2).replace('.', ',')}
+            A partir de R$ ${formatarPreco(pizza.price[0])}
         </strong>
     `;
 
-
-    // =====================================
-    // CLIQUE NA PIZZA
-    // =====================================
-
     pizzaElement.addEventListener('click', () => {
-
         pizzaJsonIndex = index;
-
         abrirPizza();
-
     });
 
-
     pizzaArea.appendChild(pizzaElement);
-
 });
 
 
 // =====================================
-// ABRIR A JANELA
+// FORMATAR PREÇO EM REAIS
 // =====================================
 
-function abrirPizza() {
-
-    let pizza = pizzaJson[pizzaJsonIndex];
-
-
-    // começa com tamanho médio
-
-    selectedSize = 1;
-
-
-    // começa com quantidade 1
-
-    quantity = 1;
-
-
-    // imagem
-
-    document.querySelector('.pizzaBig img').src =
-        pizza.img;
-
-
-    // nome
-
-    document.querySelector('.pizzaInfo h1').innerHTML =
-        pizza.name;
-
-
-    // descrição
-
-    document.querySelector('.pizzaInfo--desc').innerHTML =
-        pizza.description;
-
-
-    // quantidade
-
-    document.querySelector('.pizzaInfo--quantity').innerHTML =
-        quantity;
-
-
-    // criar tamanhos
-
-    let sizesArea =
-        document.querySelector('.pizzaInfo--sizes');
-
-
-    sizesArea.innerHTML = '';
-
-
-    pizza.sizes.forEach((size, index) => {
-
-        let sizeElement =
-            document.createElement('div');
-
-
-        sizeElement.innerHTML = size;
-
-
-        if (index === selectedSize) {
-
-            sizeElement.classList.add('selected');
-
-        }
-
-
-        sizeElement.addEventListener('click', () => {
-
-            selectedSize = index;
-
-
-            atualizarTamanho();
-
-            atualizarPreco();
-
-        });
-
-
-        sizesArea.appendChild(sizeElement);
-
-    });
-
-
-    atualizarPreco();
-
-
-    // mostrar janela
-
-    pizzaWindowArea.style.display = 'flex';
-
+function formatarPreco(valor) {
+    return valor.toFixed(2).replace('.', ',');
 }
 
 
 // =====================================
-// ATUALIZAR TAMANHO
+// ABRIR DETALHES DA PIZZA
+// =====================================
+
+function abrirPizza() {
+    let pizza = pizzaJson[pizzaJsonIndex];
+
+    selectedSize = 1;
+    quantity = 1;
+
+    document.querySelector('.pizzaBig img').src = pizza.img;
+    document.querySelector('.pizzaInfo h1').textContent = pizza.name;
+    document.querySelector('.pizzaInfo--desc').textContent =
+        pizza.description;
+
+    document.querySelector('.pizzaInfo--quantity').textContent = quantity;
+
+    let sizesArea = document.querySelector('.pizzaInfo--sizes');
+    sizesArea.innerHTML = '';
+
+    pizza.sizes.forEach((size, index) => {
+        let sizeElement = document.createElement('div');
+
+        sizeElement.textContent = size;
+
+        if (index === selectedSize) {
+            sizeElement.classList.add('selected');
+        }
+
+        sizeElement.addEventListener('click', () => {
+            selectedSize = index;
+            atualizarTamanho();
+            atualizarPreco();
+        });
+
+        sizesArea.appendChild(sizeElement);
+    });
+
+    atualizarPreco();
+
+    pizzaWindowArea.style.display = 'flex';
+}
+
+
+// =====================================
+// ATUALIZAR TAMANHO SELECIONADO
 // =====================================
 
 function atualizarTamanho() {
-
-    let sizes =
-        document.querySelectorAll(
-            '.pizzaInfo--sizes div'
-        );
-
+    let sizes = document.querySelectorAll('.pizzaInfo--sizes div');
 
     sizes.forEach((size, index) => {
-
-        if (index === selectedSize) {
-
-            size.classList.add('selected');
-
-        } else {
-
-            size.classList.remove('selected');
-
-        }
-
+        size.classList.toggle('selected', index === selectedSize);
     });
-
 }
 
 
@@ -182,21 +109,11 @@ function atualizarTamanho() {
 // =====================================
 
 function atualizarPreco() {
-
     let pizza = pizzaJson[pizzaJsonIndex];
+    let total = pizza.price[selectedSize] * quantity;
 
-
-    let price =
-        pizza.price[selectedSize];
-
-
-    let total =
-        price * quantity;
-
-
-    document.querySelector('.pizzaInfo--price').innerHTML =
-        `R$ ${total.toFixed(2).replace('.', ',')}`;
-
+    document.querySelector('.pizzaInfo--price').textContent =
+        `R$ ${formatarPreco(total)}`;
 }
 
 
@@ -204,47 +121,111 @@ function atualizarPreco() {
 // BOTÕES DE QUANTIDADE
 // =====================================
 
-let quantityButtons =
-    document.querySelectorAll(
-        '.pizzaInfo--quantityButton'
-    );
-
+let quantityButtons = document.querySelectorAll(
+    '.pizzaInfo--quantityButton'
+);
 
 quantityButtons[0].addEventListener('click', () => {
-
     if (quantity > 1) {
-
         quantity--;
-
         atualizarQuantidade();
-
     }
-
 });
-
 
 quantityButtons[1].addEventListener('click', () => {
-
     quantity++;
-
     atualizarQuantidade();
-
 });
 
-
-// =====================================
-// ATUALIZAR QUANTIDADE
-// =====================================
-
 function atualizarQuantidade() {
-
-    document.querySelector('.pizzaInfo--quantity').innerHTML =
-        quantity;
-
-
+    document.querySelector('.pizzaInfo--quantity').textContent = quantity;
     atualizarPreco();
-
 }
+
+
+// =====================================
+// ADICIONAR PIZZA AO CARRINHO
+// =====================================
+
+document.querySelector('.pizzaInfo--addButton')
+    .addEventListener('click', () => {
+
+        let pizza = pizzaJson[pizzaJsonIndex];
+
+        let item = {
+            id: pizza.id,
+            name: pizza.name,
+            img: pizza.img,
+            size: pizza.sizes[selectedSize],
+            sizeIndex: selectedSize,
+            quantity: quantity,
+            price: pizza.price[selectedSize]
+        };
+
+        cart.push(item);
+
+        atualizarCarrinho();
+
+        pizzaWindowArea.style.display = 'none';
+    });
+
+
+// =====================================
+// MOSTRAR ITENS DO CARRINHO
+// =====================================
+
+function atualizarCarrinho() {
+    let cartItems = document.querySelector('.cart-items');
+
+    cartItems.innerHTML = '';
+
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+        let itemTotal = item.price * item.quantity;
+
+        subtotal += itemTotal;
+
+        let cartElement = document.createElement('div');
+
+        cartElement.classList.add('cart-item');
+
+        cartElement.innerHTML = `
+            <div>
+                <strong>${item.name}</strong>
+                <p>Tamanho: ${item.size}</p>
+                <p>Quantidade: ${item.quantity}</p>
+                <p>Valor: R$ ${formatarPreco(itemTotal)}</p>
+            </div>
+
+            <button class="remove-item">
+                Remover
+            </button>
+        `;
+
+        cartElement.querySelector('.remove-item')
+            .addEventListener('click', () => {
+                cart.splice(index, 1);
+                atualizarCarrinho();
+            });
+
+        cartItems.appendChild(cartElement);
+    });
+
+    document.querySelector('.cart-subtotal').textContent =
+        `R$ ${formatarPreco(subtotal)}`;
+}
+
+
+// =====================================
+// LIMPAR CARRINHO
+// =====================================
+
+document.querySelector('.cart-clear')
+    .addEventListener('click', () => {
+        cart = [];
+        atualizarCarrinho();
+    });
 
 
 // =====================================
@@ -252,22 +233,15 @@ function atualizarQuantidade() {
 // =====================================
 
 pizzaWindowClose.addEventListener('click', () => {
-
     pizzaWindowArea.style.display = 'none';
-
 });
-
-
-// =====================================
-// FECHAR CLICANDO FORA
-// =====================================
 
 pizzaWindowArea.addEventListener('click', (event) => {
-
     if (event.target === pizzaWindowArea) {
-
         pizzaWindowArea.style.display = 'none';
-
     }
-
 });
+
+
+// Mostrar carrinho vazio ao iniciar
+atualizarCarrinho();
