@@ -6,47 +6,52 @@ let pizzaWindowClose = document.querySelector('.pizzaWindowClose');
 
 let pizzaJsonIndex = 0;
 
+let selectedSize = 1;
+
+let quantity = 1;
+
+
 // =====================================
 // CRIAR AS PIZZAS
 // =====================================
 
 pizzaJson.forEach((pizza, index) => {
 
+    let pizzaElement = document.createElement('div');
 
-let pizzaElement = document.createElement('div');
+    pizzaElement.classList.add('pizza');
 
-pizzaElement.classList.add('pizza');
+    pizzaElement.innerHTML = `
+        <img src="${pizza.img}" alt="${pizza.name}">
 
-pizzaElement.innerHTML = `
-    <img src="${pizza.img}" alt="${pizza.name}">
+        <h3>${pizza.name}</h3>
 
-    <h3>${pizza.name}</h3>
+        <p>${pizza.description}</p>
 
-    <p>${pizza.description}</p>
-
-    <strong>
-        R$ ${pizza.price.toFixed(2).replace('.', ',')}
-    </strong>
-`;
+        <strong>
+            A partir de
+            R$ ${pizza.price[0].toFixed(2).replace('.', ',')}
+        </strong>
+    `;
 
 
-// =====================================
-// CLIQUE NA PIZZA
-// =====================================
+    // =====================================
+    // CLIQUE NA PIZZA
+    // =====================================
 
-pizzaElement.addEventListener('click', () => {
+    pizzaElement.addEventListener('click', () => {
 
-    pizzaJsonIndex = index;
+        pizzaJsonIndex = index;
 
-    abrirPizza();
+        abrirPizza();
+
+    });
+
+
+    pizzaArea.appendChild(pizzaElement);
 
 });
 
-
-pizzaArea.appendChild(pizzaElement);
-
-
-});
 
 // =====================================
 // ABRIR A JANELA
@@ -54,30 +59,193 @@ pizzaArea.appendChild(pizzaElement);
 
 function abrirPizza() {
 
-
-let pizza = pizzaJson[pizzaJsonIndex];
-
-
-document.querySelector('.pizzaBig img').src =
-    pizza.img;
+    let pizza = pizzaJson[pizzaJsonIndex];
 
 
-document.querySelector('.pizzaInfo h1').innerHTML =
-    pizza.name;
+    // começa com tamanho médio
+
+    selectedSize = 1;
 
 
-document.querySelector('.pizzaInfo--desc').innerHTML =
-    pizza.description;
+    // começa com quantidade 1
+
+    quantity = 1;
 
 
-document.querySelector('.pizzaInfo--price').innerHTML =
-    `R$ ${pizza.price.toFixed(2).replace('.', ',')}`;
+    // imagem
+
+    document.querySelector('.pizzaBig img').src =
+        pizza.img;
 
 
-pizzaWindowArea.style.display = 'flex';
+    // nome
 
+    document.querySelector('.pizzaInfo h1').innerHTML =
+        pizza.name;
+
+
+    // descrição
+
+    document.querySelector('.pizzaInfo--desc').innerHTML =
+        pizza.description;
+
+
+    // quantidade
+
+    document.querySelector('.pizzaInfo--quantity').innerHTML =
+        quantity;
+
+
+    // criar tamanhos
+
+    let sizesArea =
+        document.querySelector('.pizzaInfo--sizes');
+
+
+    sizesArea.innerHTML = '';
+
+
+    pizza.sizes.forEach((size, index) => {
+
+        let sizeElement =
+            document.createElement('div');
+
+
+        sizeElement.innerHTML = size;
+
+
+        if (index === selectedSize) {
+
+            sizeElement.classList.add('selected');
+
+        }
+
+
+        sizeElement.addEventListener('click', () => {
+
+            selectedSize = index;
+
+
+            atualizarTamanho();
+
+            atualizarPreco();
+
+        });
+
+
+        sizesArea.appendChild(sizeElement);
+
+    });
+
+
+    atualizarPreco();
+
+
+    // mostrar janela
+
+    pizzaWindowArea.style.display = 'flex';
 
 }
+
+
+// =====================================
+// ATUALIZAR TAMANHO
+// =====================================
+
+function atualizarTamanho() {
+
+    let sizes =
+        document.querySelectorAll(
+            '.pizzaInfo--sizes div'
+        );
+
+
+    sizes.forEach((size, index) => {
+
+        if (index === selectedSize) {
+
+            size.classList.add('selected');
+
+        } else {
+
+            size.classList.remove('selected');
+
+        }
+
+    });
+
+}
+
+
+// =====================================
+// ATUALIZAR PREÇO
+// =====================================
+
+function atualizarPreco() {
+
+    let pizza = pizzaJson[pizzaJsonIndex];
+
+
+    let price =
+        pizza.price[selectedSize];
+
+
+    let total =
+        price * quantity;
+
+
+    document.querySelector('.pizzaInfo--price').innerHTML =
+        `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+}
+
+
+// =====================================
+// BOTÕES DE QUANTIDADE
+// =====================================
+
+let quantityButtons =
+    document.querySelectorAll(
+        '.pizzaInfo--quantityButton'
+    );
+
+
+quantityButtons[0].addEventListener('click', () => {
+
+    if (quantity > 1) {
+
+        quantity--;
+
+        atualizarQuantidade();
+
+    }
+
+});
+
+
+quantityButtons[1].addEventListener('click', () => {
+
+    quantity++;
+
+    atualizarQuantidade();
+
+});
+
+
+// =====================================
+// ATUALIZAR QUANTIDADE
+// =====================================
+
+function atualizarQuantidade() {
+
+    document.querySelector('.pizzaInfo--quantity').innerHTML =
+        quantity;
+
+
+    atualizarPreco();
+
+}
+
 
 // =====================================
 // FECHAR A JANELA
@@ -85,11 +253,10 @@ pizzaWindowArea.style.display = 'flex';
 
 pizzaWindowClose.addEventListener('click', () => {
 
-
-pizzaWindowArea.style.display = 'none';
-
+    pizzaWindowArea.style.display = 'none';
 
 });
+
 
 // =====================================
 // FECHAR CLICANDO FORA
@@ -97,12 +264,10 @@ pizzaWindowArea.style.display = 'none';
 
 pizzaWindowArea.addEventListener('click', (event) => {
 
+    if (event.target === pizzaWindowArea) {
 
-if (event.target === pizzaWindowArea) {
+        pizzaWindowArea.style.display = 'none';
 
-    pizzaWindowArea.style.display = 'none';
-
-}
-
+    }
 
 });
