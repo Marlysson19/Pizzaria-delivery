@@ -244,4 +244,107 @@ pizzaWindowArea.addEventListener('click', (event) => {
 
 
 // Mostrar carrinho vazio ao iniciar
-atualizarCarrinho();
+
+function atualizarCarrinho() {
+    let cartItems = document.querySelector('.cart-items');
+
+    cartItems.innerHTML = '';
+
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+        let itemTotal = item.price * item.quantity;
+
+        subtotal += itemTotal;
+
+        let cartElement = document.createElement('div');
+
+        cartElement.classList.add('cart-item');
+
+        cartElement.innerHTML = `
+            <div>
+                <strong>${item.name}</strong>
+                <p>Tamanho: ${item.size}</p>
+                <p>Quantidade: ${item.quantity}</p>
+                <p>Valor: R$ ${formatarPreco(itemTotal)}</p>
+            </div>
+
+            <button class="remove-item">Remover</button>
+        `;
+
+        cartElement.querySelector('.remove-item')
+            .addEventListener('click', () => {
+                cart.splice(index, 1);
+                atualizarCarrinho();
+            });
+
+        cartItems.appendChild(cartElement);
+    });
+
+    // Calcula desconto de 10%
+    let desconto = subtotal * 0.10;
+
+    // Calcula o total final
+    let total = subtotal - desconto;
+
+    // Atualiza os valores na tela
+    document.querySelector('.cart-subtotal').textContent =
+        `R$ ${formatarPreco(subtotal)}`;
+
+    document.querySelector('.cart-discount').textContent =
+        `R$ ${formatarPreco(desconto)}`;
+
+    document.querySelector('.cart-total').textContent =
+        `R$ ${formatarPreco(total)}`;
+}
+
+// =====================================
+// FINALIZAR PEDIDO PELO WHATSAPP
+// =====================================
+
+// Troque pelo número da sua pizzaria.
+// Use código do país + DDD + número, somente dígitos.
+const telefonePizzaria = '5511999999999';
+
+document.querySelector('.cart-finish')
+    .addEventListener('click', () => {
+
+        // Impede finalizar um carrinho vazio
+        if (cart.length === 0) {
+            alert('Adicione pelo menos uma pizza ao carrinho!');
+            return;
+        }
+
+        let subtotal = 0;
+        let mensagem = '🍕 *NOVO PEDIDO - MINHA PIZZARIA*\n\n';
+
+        cart.forEach((item) => {
+            let itemTotal = item.price * item.quantity;
+
+            subtotal += itemTotal;
+
+            mensagem +=
+                `*${item.name}*\n` +
+                `Tamanho: ${item.size}\n` +
+                `Quantidade: ${item.quantity}\n` +
+                `Valor: R$ ${formatarPreco(itemTotal)}\n\n`;
+        });
+
+        let desconto = subtotal * 0.10;
+        let total = subtotal - desconto;
+
+        mensagem +=
+            '------------------------\n' +
+            `Subtotal: R$ ${formatarPreco(subtotal)}\n` +
+            `Desconto (10%): R$ ${formatarPreco(desconto)}\n` +
+            `*TOTAL: R$ ${formatarPreco(total)}*\n\n` +
+            'Olá! Gostaria de confirmar este pedido.';
+
+        let url =
+            `https://wa.me/${telefonePizzaria}?text=` +
+            encodeURIComponent(mensagem);
+
+        window.open(url, '_blank');
+    });
+
+
