@@ -27,6 +27,15 @@ description: 'Molho de tomate, queijo mussarela e orégano.'
     description: 'Uma combinação deliciosa de queijos.'
 },
 
+{    
+    id: 4,
+    name: 'CINCO QUEIJOS',
+    img: 'images/pizza4.png',
+    price: [25.00, 34.00, 35.00],
+    sizes: ['PEQUENO', 'MÉDIA', 'GRANDE'],
+    description: 'Uma combinação deliciosa de queijos.'
+}
+
 
 
 
