@@ -347,4 +347,20 @@ document.querySelector('.cart-finish')
         window.open(url, '_blank');
     });
 
+    
+// Mostrar troco somente para pagamento em dinheiro
+
+const paymentMethod = document.querySelector('#payment-method');
+const changeArea = document.querySelector('#change-area');
+
+paymentMethod.addEventListener('change', () => {
+    if (paymentMethod.value === 'Dinheiro') {
+        changeArea.style.display = 'flex';
+    } else {
+        changeArea.style.display = 'none';
+    }
+});
+
+    
+
 
