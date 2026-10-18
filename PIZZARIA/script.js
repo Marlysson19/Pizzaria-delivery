@@ -382,7 +382,7 @@ document.querySelector('.cart-finish')
 
         // Substitua pelo WhatsApp da pizzaria:
         // código do país + DDD + número, somente dígitos.
-        const telefonePizzaria = '5511999999999';
+        const telefonePizzaria = '86988131899';
 
         const url = `https://wa.me/${telefonePizzaria}?text=${encodeURIComponent(mensagem)}`;
 
