@@ -236,14 +236,11 @@ pizzaWindowClose.addEventListener('click', () => {
     pizzaWindowArea.style.display = 'none';
 });
 
-p
 pizzaWindowArea.addEventListener('click', (event) => {
-    // Fecha somente quando clicar no fundo escuro
     if (event.target === pizzaWindowArea) {
         pizzaWindowArea.style.display = 'none';
     }
 });
-
 
 
 // Mostrar carrinho vazio ao iniciar
@@ -385,12 +382,13 @@ document.querySelector('.cart-finish')
 
         // Substitua pelo WhatsApp da pizzaria:
         // código do país + DDD + número, somente dígitos.
-        const telefonePizzaria = '86988131899';
+        const telefonePizzaria = '5586988131899';
 
         const url = `https://wa.me/${telefonePizzaria}?text=${encodeURIComponent(mensagem)}`;
 
         window.open(url, '_blank');
     });
+
 
 // Mostrar troco somente para pagamento em dinheiro
 
