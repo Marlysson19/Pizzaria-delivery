@@ -236,12 +236,14 @@ pizzaWindowClose.addEventListener('click', () => {
     pizzaWindowArea.style.display = 'none';
 });
 
+p
 pizzaWindowArea.addEventListener('click', (event) => {
-    // Só fecha se clicar diretamente no fundo escuro
+    // Fecha somente quando clicar no fundo escuro
     if (event.target === pizzaWindowArea) {
         pizzaWindowArea.style.display = 'none';
     }
 });
+
 
 
 // Mostrar carrinho vazio ao iniciar
