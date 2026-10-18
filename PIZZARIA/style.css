@@ -475,3 +475,48 @@ background-color: #218838;
         font-size: 20px;
     }
 }
+
+/* FORMULÁRIO DO CLIENTE */
+
+.customer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 25px 0;
+    padding: 20px;
+    background: #f7f7f7;
+    border-radius: 10px;
+}
+
+.customer-form h2 {
+    margin-top: 0;
+    color: #d62828;
+}
+
+.customer-form label {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.customer-form input,
+.customer-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    background: white;
+}
+
+.customer-form input:focus,
+.customer-form select:focus {
+    outline: 2px solid #399ade;
+    border-color: #399ade;
+}
+
+#change-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
