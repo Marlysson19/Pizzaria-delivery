@@ -237,6 +237,7 @@ pizzaWindowClose.addEventListener('click', () => {
 });
 
 pizzaWindowArea.addEventListener('click', (event) => {
+    // Só fecha se clicar diretamente no fundo escuro
     if (event.target === pizzaWindowArea) {
         pizzaWindowArea.style.display = 'none';
     }
