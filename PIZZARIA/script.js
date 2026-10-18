@@ -304,50 +304,91 @@ function atualizarCarrinho() {
 
 // Troque pelo número da sua pizzaria.
 // Use código do país + DDD + número, somente dígitos.
-const telefonePizzaria = '5511999999999';
+const telefonePizzaria = '86988131899';
+
+
+// FINALIZAR PEDIDO COM DADOS DO CLIENTE
 
 document.querySelector('.cart-finish')
     .addEventListener('click', () => {
 
-        // Impede finalizar um carrinho vazio
         if (cart.length === 0) {
-            alert('Adicione pelo menos uma pizza ao carrinho!');
+            alert('Adicione uma pizza ao carrinho!');
+            return;
+        }
+
+        const nome = document.querySelector('#customer-name').value.trim();
+        const telefone = document.querySelector('#customer-phone').value.trim();
+        const endereco = document.querySelector('#customer-address').value.trim();
+        const referencia = document.querySelector('#customer-reference').value.trim();
+        const pagamento = document.querySelector('#payment-method').value;
+        const trocoInput = document.querySelector('#customer-change').value;
+
+        if (!nome || !telefone || !endereco || !pagamento) {
+            alert('Preencha seu nome, telefone, endereço e forma de pagamento.');
             return;
         }
 
         let subtotal = 0;
         let mensagem = '🍕 *NOVO PEDIDO - MINHA PIZZARIA*\n\n';
 
-        cart.forEach((item) => {
-            let itemTotal = item.price * item.quantity;
+        mensagem += `*CLIENTE:* ${nome}\n`;
+        mensagem += `*TELEFONE:* ${telefone}\n`;
+        mensagem += `*ENDEREÇO:* ${endereco}\n`;
 
-            subtotal += itemTotal;
+        if (referencia) {
+            mensagem += `*REFERÊNCIA:* ${referencia}\n`;
+        }
+
+        mensagem += '\n*ITENS DO PEDIDO*\n\n';
+
+        cart.forEach((item) => {
+            const valorItem = item.price * item.quantity;
+            subtotal += valorItem;
 
             mensagem +=
-                `*${item.name}*\n` +
+                `🍕 ${item.name}\n` +
                 `Tamanho: ${item.size}\n` +
                 `Quantidade: ${item.quantity}\n` +
-                `Valor: R$ ${formatarPreco(itemTotal)}\n\n`;
+                `Valor: R$ ${formatarPreco(valorItem)}\n\n`;
         });
 
-        let desconto = subtotal * 0.10;
-        let total = subtotal - desconto;
+        const desconto = subtotal * 0.10;
+        const total = subtotal - desconto;
+
+        if (pagamento === 'Dinheiro') {
+            if (trocoInput === '') {
+                alert('Informe o valor para o qual precisa de troco. Se não precisar, informe o valor exato do pedido.');
+                return;
+            }
+
+            const trocoPara = Number(trocoInput);
+
+            if (!Number.isFinite(trocoPara) || trocoPara < total) {
+                alert('O valor informado para troco precisa ser igual ou maior que o total do pedido.');
+                return;
+            }
+
+            mensagem += `*TROCO PARA:* R$ ${formatarPreco(trocoPara)}\n`;
+        }
 
         mensagem +=
             '------------------------\n' +
             `Subtotal: R$ ${formatarPreco(subtotal)}\n` +
             `Desconto (10%): R$ ${formatarPreco(desconto)}\n` +
-            `*TOTAL: R$ ${formatarPreco(total)}*\n\n` +
+            `*TOTAL: R$ ${formatarPreco(total)}*\n` +
+            `*PAGAMENTO:* ${pagamento}\n\n` +
             'Olá! Gostaria de confirmar este pedido.';
 
-        let url =
-            `https://wa.me/${telefonePizzaria}?text=` +
-            encodeURIComponent(mensagem);
+        // Substitua pelo WhatsApp da pizzaria:
+        // código do país + DDD + número, somente dígitos.
+        const telefonePizzaria = '5511999999999';
+
+        const url = `https://wa.me/${telefonePizzaria}?text=${encodeURIComponent(mensagem)}`;
 
         window.open(url, '_blank');
     });
 
-    
 // Mostrar troco somente para pagamento em dinheiro
 
 const paymentMethod = document.querySelector('#payment-method');
