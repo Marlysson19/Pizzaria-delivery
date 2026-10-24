@@ -281,28 +281,28 @@ function atualizarCarrinho() {
         cartItems.appendChild(cartElement);
     });
 
-// CALCULAR SUBTOTAL, DESCONTO, ENTREGA E TOTAL
+    // CALCULAR SUBTOTAL, DESCONTO, ENTREGA E TOTAL
 
-let desconto = subtotal * 0.10;
+    let desconto = subtotal * 0.10;
 
-// Exemplo: taxa fixa de entrega de R$ 5,00
-// Se o carrinho estiver vazio, não cobra entrega.
-let taxaEntrega = cart.length > 0 ? 5.00 : 0;
+    // Exemplo: taxa fixa de entrega de R$ 5,00
+    // Se o carrinho estiver vazio, não cobra entrega.
+    let taxaEntrega = cart.length > 0 ? 5.00 : 0;
 
-let total = subtotal - desconto + taxaEntrega;
+    let total = subtotal - desconto + taxaEntrega;
 
-// Atualizar os valores na página
-document.querySelector('.cart-subtotal').textContent =
-    `R$ ${formatarPreco(subtotal)}`;
+    // Atualizar os valores na página
+    document.querySelector('.cart-subtotal').textContent =
+        `R$ ${formatarPreco(subtotal)}`;
 
-document.querySelector('.cart-discount').textContent =
-    `R$ ${formatarPreco(desconto)}`;
+    document.querySelector('.cart-discount').textContent =
+        `R$ ${formatarPreco(desconto)}`;
 
-document.querySelector('.cart-delivery').textContent =
-    `R$ ${formatarPreco(taxaEntrega)}`;
+    document.querySelector('.cart-delivery').textContent =
+        `R$ ${formatarPreco(taxaEntrega)}`;
 
-document.querySelector('.cart-total').textContent =
-    `R$ ${formatarPreco(total)}`; 
+    document.querySelector('.cart-total').textContent =
+        `R$ ${formatarPreco(total)}`; 
 
 // =====================================
 // FINALIZAR PEDIDO PELO WHATSAPP
