@@ -281,22 +281,28 @@ function atualizarCarrinho() {
         cartItems.appendChild(cartElement);
     });
 
-    // Calcula desconto de 10%
-    let desconto = subtotal * 0.10;
+// CALCULAR SUBTOTAL, DESCONTO, ENTREGA E TOTAL
 
-    // Calcula o total final
-    let total = subtotal - desconto;
+let desconto = subtotal * 0.10;
 
-    // Atualiza os valores na tela
-    document.querySelector('.cart-subtotal').textContent =
-        `R$ ${formatarPreco(subtotal)}`;
+// Exemplo: taxa fixa de entrega de R$ 5,00
+// Se o carrinho estiver vazio, não cobra entrega.
+let taxaEntrega = cart.length > 0 ? 5.00 : 0;
 
-    document.querySelector('.cart-discount').textContent =
-        `R$ ${formatarPreco(desconto)}`;
+let total = subtotal - desconto + taxaEntrega;
 
-    document.querySelector('.cart-total').textContent =
-        `R$ ${formatarPreco(total)}`;
-}
+// Atualizar os valores na página
+document.querySelector('.cart-subtotal').textContent =
+    `R$ ${formatarPreco(subtotal)}`;
+
+document.querySelector('.cart-discount').textContent =
+    `R$ ${formatarPreco(desconto)}`;
+
+document.querySelector('.cart-delivery').textContent =
+    `R$ ${formatarPreco(taxaEntrega)}`;
+
+document.querySelector('.cart-total').textContent =
+    `R$ ${formatarPreco(total)}`; 
 
 // =====================================
 // FINALIZAR PEDIDO PELO WHATSAPP
