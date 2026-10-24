@@ -407,8 +407,4 @@ paymentMethod.addEventListener('change', () => {
     } else {
         changeArea.style.display = 'none';
     }
-});
-
-    
-
-
+})}
